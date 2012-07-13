@@ -1,0 +1,4 @@
+[
+  {"keys": ["ctrl+k", "e"], "command": "aes_crypt", "args": {"enc": true}},
+  {"keys": ["ctrl+k", "d"], "command": "aes_crypt", "args": {"enc": false}}
+]

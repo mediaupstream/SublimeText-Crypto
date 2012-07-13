@@ -1,0 +1,8 @@
+[{
+  "id": "cryptocontext",
+  "caption": "Crypto",
+  "children":[
+    { "id":"crypto_encrypt", "caption": "AES Encrypt", "command": "aes_crypt", "args": {"enc": true} },
+    { "id":"crypto_decrypt", "caption": "AES Decrypt", "command": "aes_crypt", "args": {"enc": false} }
+  ]
+}]
