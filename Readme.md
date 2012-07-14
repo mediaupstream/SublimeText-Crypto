@@ -9,8 +9,6 @@ The package will encrypt or decrypt a document or selection(s) using this comman
 
     echo "your selection or document" | openssl enc -e -aes128 -base64 -pass "pass:your_password"
 
-In the future there will be a .sublime-settings file that allows you to configure the location of `openssl` and the Cipher type to use. (see Todo).
-
 
 Install
 -------
@@ -38,6 +36,10 @@ After installation you will have:
 * Default keyboard shortcuts:
   - `⌘+K,e` on OSX or `ctrl+K,e` on Linux/Windows (AES Encrypt)
   - `⌘+K,d` on OSX or `ctrl+K,d` on Linux/Windows (AES Decrypt)
+* Package Settings: `Preferences > Package Settings > Crypto`
+  - Set the path to your `openssl` executable - *default: `openssl`*
+  - Set the Encryption Cipher - *default: `aes128`*
+
 
 The commands work on a selection, multiple selections or if nothing is selected the whole document. Once you trigger the command you will be prompted to enter a password.
 
@@ -46,9 +48,6 @@ The commands work on a selection, multiple selections or if nothing is selected 
 Todo
 ----
 * Test on Linux and Windows
-* Create a .sublime-settings
-  - Set the path to the `openssl` executable
-  - Set the encryption cipher type
 
 
 Author & Contributors

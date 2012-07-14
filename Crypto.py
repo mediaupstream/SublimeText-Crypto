@@ -50,20 +50,35 @@ def panel(window, message):
 #   echo "data" | openssl enc -e -aes128 -base64 -pass "pass:lolcats"
 #
 def crypto(view, enc_flag, password, data):
-  # enc_type = '-aes-256-cbc'
-  enc_type = '-aes128'
+  s = sublime.load_settings("Crypto.sublime-settings")
+  cipher = s.get('cipher')
+  openssl_command = s.get('openssl_command')
   password = "pass:%s" % password
   # Pipe our data to the stdin of `openssl`
-  echo = Popen(["echo", data], stdout=PIPE)
-  openssl = Popen(["openssl", "enc", enc_flag, enc_type, "-base64", "-pass", password], stdin=echo.stdout, stdout=PIPE, stderr=PIPE)
-  result, error = openssl.communicate()
+  try:
+    echo = Popen(["echo", data], stdout=PIPE)
+    openssl = Popen([openssl_command, "enc", enc_flag, cipher, "-base64", "-pass", password], stdin=echo.stdout, stdout=PIPE, stderr=PIPE)
+    result, error = openssl.communicate()
+  except OSError,e:
+    error_message = """
+ Please verify that you have installed OpenSSL.
+ Attempting to execute: %s
+ Error: %s
+    """ % (openssl_command, e[1])
+    panel(view.window(), error_message)
+    return False
+
   # probably a wrong password was entered
   if error:
-    panel(view.window(), 'Error: Wrong password?')
+    _err = error.splitlines()[0]
+    if _err.find('unknown option') != -1:
+      panel(view.window(), 'Error: ' + _err)
+    else:
+      panel(view.window(), 'Error: Wrong password?')
     return False
+
   # return our results without the trailing \n character
   return result[:-1]
-
 
 #
 # Get the selected text regions (or the whole document) and process it
@@ -95,9 +110,10 @@ class CryptoCommand(sublime_plugin.TextCommand, Word):
     for region in regions:
       data = self.view.substr(region)
       results = crypto(self.view, enc_flag, password, data)
-      if enc:
-        results = results.encode( encoding )
-      else:
-        results = results.decode( encoding )
       if results:
+        if enc:
+          results = results.encode( encoding )
+        else:
+          results = results.decode( encoding )
+
         self.view.replace(edit, region, results)
