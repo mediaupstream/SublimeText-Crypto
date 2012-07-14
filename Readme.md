@@ -38,7 +38,7 @@ After installation you will have:
   - `⌘+K,d` on OSX or `ctrl+K,d` on Linux/Windows (AES Decrypt)
 * Package Settings: `Preferences > Package Settings > Crypto`
   - Set the path to your `openssl` executable - *default: `openssl`*
-  - Set the Encryption Cipher - *default: `aes128`*
+  - Set the Encryption Cipher - *default: `-aes128`*
 
 
 The commands work on a selection, multiple selections or if nothing is selected the whole document. Once you trigger the command you will be prompted to enter a password.
@@ -48,6 +48,11 @@ The commands work on a selection, multiple selections or if nothing is selected 
 Todo
 ----
 * Test on Linux and Windows
+* Add other functionality:
+  - encryption on save
+  - encrypt/decrypt multiple files, or all open files
+  - encrypt/decrypt using a keyfile
+  - etc...
 
 
 Author & Contributors
