@@ -12,6 +12,22 @@ The package will encrypt or decrypt a document or selection(s) using this comman
 In the future there will be a .sublime-settings file that allows you to configure the location of `openssl` and the Cipher type to use. (see Todo).
 
 
+Install
+-------
+Installation via the [Package Control](http://wbond.net/sublime_packages/package_control) 
+  
+To install manually clone this project into your `Sublime Text 2\Packages` folder:
+
+*OSX*
+
+    git clone git://github.com/mediaupstream/SublimeText-Crypto.git ~/Library/Application\ Support/Sublime\ Text\ 2/Packages/Crypto
+
+*Windows*
+
+    git clone git://github.com/mediaupstream/SublimeText-Crypto.git "%APPDATA%\Sublime Text 2\Packages\Crypto"
+
+
+
 Usage
 -----
 After installation you will have:  
@@ -25,16 +41,6 @@ After installation you will have:
 
 The commands work on a selection, multiple selections or if nothing is selected the whole document. Once you trigger the command you will be prompted to enter a password.
 
-
-Install
--------
-Installation via the [Package Control](http://wbond.net/sublime_packages/package_control) 
-  
-or install manually 
-
-    `git clone git://github.com/derekanderson/SublimeText-Crypto.git SublimeText-Crypto.sublime-package`
-
-Double click the file `SublimeText-Crypto.sublime-package` to install.
 
 
 Todo
