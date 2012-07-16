@@ -12,7 +12,7 @@ from the context menu and then enter a password
 
 '''
 
-import sublime, sublime_plugin, sys
+import sublime, sublime_plugin
 from subprocess import Popen, PIPE, STDOUT
 
 #
@@ -83,7 +83,7 @@ def crypto(view, enc_flag, password, data):
 #
 # Get the selected text regions (or the whole document) and process it
 #
-class CryptoCommand(sublime_plugin.TextCommand, Word):
+class CryptoCommand(sublime_plugin.TextCommand):
   def run(self, edit, enc, password):
     # are we encrypting or decrypting?
     enc_flag = '-e' if enc else '-d'

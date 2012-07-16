@@ -30,13 +30,13 @@ Usage
 -----
 After installation you will have:  
 
-* Right-click menu item `Crypto` and `Tools > Crypto` with two options: 
+* Right-click menu item `Crypto` and `Tools > Crypto` with two options:  
   - `AES Encrypt`
   - `AES Decrypt`
-* Default keyboard shortcuts:
+* Default keyboard shortcuts:  
   - `⌘+K,e` on OSX or `ctrl+K,e` on Linux/Windows (AES Encrypt)
   - `⌘+K,d` on OSX or `ctrl+K,d` on Linux/Windows (AES Decrypt)
-* Package Settings: `Preferences > Package Settings > Crypto`
+* Package Settings: `Preferences > Package Settings > Crypto`  
   - Set the path to your `openssl` executable - *default: `openssl`*
   - Set the Encryption Cipher - *default: `-aes128`*
 
