@@ -1,11 +1,9 @@
 Crypto Sublime Text 2 Package
 =============================
 
-### Encrypt and Decrypt a document or selection(s)
+### Encrypt and Decrypt a document or selection(s) using OpenSSL
 
 This Package depends on having `openssl` installed on your system
-
-Crypto allows you to encrypt or decrypt a document or selection(s) using OpenSSL. This package depeonds on `openssl` being installed on your system.
 
 
 Screenshots
