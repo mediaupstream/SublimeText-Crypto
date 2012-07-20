@@ -5,14 +5,17 @@ Crypto Sublime Text 2 Package
 
 This Package depends on having `openssl` installed on your system
 
-The package will encrypt or decrypt a document or selection(s) using this command:
+Crypto allows you to encrypt or decrypt a document or selection(s) using OpenSSL. This package depeonds on `openssl` being installed on your system.
 
-    echo "your selection or document" | openssl enc -e -aes128 -base64 -pass "pass:your_password"
+
+Screenshots
+--------
+![Preview](https://github.com/mediaupstream/SublimeText-Crypto/raw/master/screenshots/Crypto_screenshot.png "Before Encryption") ![Preview](https://github.com/mediaupstream/SublimeText-Crypto/raw/master/screenshots/Crypto_encrypted_screenshot.png "After Encryption")  
 
 
 Install
 -------
-Installation via the [Package Control](http://wbond.net/sublime_packages/package_control) 
+Installation via the [Package Control](http://wbond.net/sublime_packages/package_control) (Search for `Crypto`)
   
 To install manually clone this project into your `Sublime Text 2\Packages` folder:
 
@@ -31,14 +34,14 @@ Usage
 After installation you will have:  
 
 * Right-click menu item `Crypto` and `Tools > Crypto` with two options:  
-  - `AES Encrypt`
-  - `AES Decrypt`
+  - `Encrypt`
+  - `Decrypt`
 * Default keyboard shortcuts:  
-  - `⌘+K,e` on OSX or `ctrl+K,e` on Linux/Windows (AES Encrypt)
-  - `⌘+K,d` on OSX or `ctrl+K,d` on Linux/Windows (AES Decrypt)
+  - `⌘+K,e` on OSX or `ctrl+K,e` on Linux/Windows (Encrypt)
+  - `⌘+K,d` on OSX or `ctrl+K,d` on Linux/Windows (Decrypt)
 * Package Settings: `Preferences > Package Settings > Crypto`  
-  - Set the path to your `openssl` executable - *default: `openssl`*
-  - Set the Encryption Cipher - *default: `-aes128`*
+  - Set the path to your `openssl` executable - default: `openssl`
+  - Set the Encryption Cipher - default: `-aes128`
 
 
 The commands work on a selection, multiple selections or if nothing is selected the whole document. Once you trigger the command you will be prompted to enter a password.
