@@ -3,7 +3,7 @@ Crypto Sublime Text 2 Package
 
 ### Encrypt and Decrypt a document or selection(s) using OpenSSL
 
-This Package depends on having `openssl` installed on your system
+This Package depends on `openssl`
 
 
 Screenshots
@@ -45,10 +45,9 @@ After installation you will have:
 The commands work on a selection, multiple selections or if nothing is selected the whole document. Once you trigger the command you will be prompted to enter a password.
 
 
-
 Todo
 ----
-* Test on Linux and Windows
+* ~~Test on Linux and Windows~~
 * Add other functionality:
   - encryption on save
   - encrypt/decrypt multiple files, or all open files

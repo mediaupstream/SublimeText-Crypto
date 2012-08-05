@@ -12,7 +12,7 @@ from the context menu and then enter a password
 
 '''
 
-import sublime, sublime_plugin
+import sublime, sublime_plugin, os
 from subprocess import Popen, PIPE, STDOUT
 
 #
@@ -46,18 +46,18 @@ def panel(window, message):
 
 #
 # Encrypt/Decrypt using OpenSSL -aes128 and -base64
-# EG same as running this CLI command:
+# EG similar to running this CLI command:
 #   echo "data" | openssl enc -e -aes128 -base64 -pass "pass:lolcats"
 #
 def crypto(view, enc_flag, password, data):
   s = sublime.load_settings("Crypto.sublime-settings")
   cipher = s.get('cipher')
-  openssl_command = s.get('openssl_command')
+  openssl_command = os.path.normpath( s.get('openssl_command') )
   password = "pass:%s" % password
-  # Pipe our data to the stdin of `openssl`
+
   try:
-    echo = Popen(["echo", data], stdout=PIPE)
-    openssl = Popen([openssl_command, "enc", enc_flag, cipher, "-base64", "-pass", password], stdin=echo.stdout, stdout=PIPE, stderr=PIPE)
+    openssl = Popen([openssl_command, "enc", enc_flag, cipher, "-base64", "-pass", password], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+    openssl.stdin.write( data )
     result, error = openssl.communicate()
   except OSError,e:
     error_message = """
@@ -73,12 +73,14 @@ def crypto(view, enc_flag, password, data):
     _err = error.splitlines()[0]
     if _err.find('unknown option') != -1:
       panel(view.window(), 'Error: ' + _err)
+    elif _err.find("WARNING:") != -1:
+      # skip WARNING's
+      return result
     else:
       panel(view.window(), 'Error: Wrong password?')
     return False
 
-  # return our results without the trailing \n character
-  return result[:-1]
+  return result
 
 #
 # Get the selected text regions (or the whole document) and process it
@@ -99,7 +101,6 @@ class CryptoCommand(sublime_plugin.TextCommand):
       regions.add( sublime.Region(0, view_size) )
 
     # get current document encoding or set sane defaults
-
     encoding = self.view.encoding()
     if encoding == 'Undefined':
       encoding = 'utf-8'
@@ -109,11 +110,10 @@ class CryptoCommand(sublime_plugin.TextCommand):
     # encrypt / decrypt selections
     for region in regions:
       data = self.view.substr(region)
-      results = crypto(self.view, enc_flag, password, data)
+      results = crypto(self.view, enc_flag, password, data)  
       if results:
         if enc:
           results = results.encode( encoding )
         else:
           results = results.decode( encoding )
-
         self.view.replace(edit, region, results)
