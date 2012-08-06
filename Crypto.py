@@ -57,7 +57,7 @@ def crypto(view, enc_flag, password, data):
 
   try:
     openssl = Popen([openssl_command, "enc", enc_flag, cipher, "-base64", "-pass", password], stdin=PIPE, stdout=PIPE, stderr=PIPE)
-    openssl.stdin.write( data )
+    openssl.stdin.write( data.encode("utf-8") )
     result, error = openssl.communicate()
   except OSError,e:
     error_message = """
