@@ -15,6 +15,8 @@ from the context menu and then enter a password
 import sublime, sublime_plugin, os
 from subprocess import Popen, PIPE, STDOUT
 
+ST3 = int(sublime.version()) >= 3000
+
 #
 # Capture user input (password) and send to the CryptoCommand
 #
@@ -113,7 +115,13 @@ class CryptoCommand(sublime_plugin.TextCommand):
       results = crypto(self.view, enc_flag, password, data)
       if results:
         if enc:
-          results = str(results, encoding)
+          if ST3:
+            results = str(results, encoding)
+          else:
+            results.encode( encoding )
         else:
-          results = str(results, encoding)
+          if ST3:
+            results = str(results, encoding)
+          else:
+            results = results.decode( encoding )
         self.view.replace(edit, region, results)
