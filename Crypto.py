@@ -59,7 +59,7 @@ def crypto(view, enc_flag, password, data):
     openssl = Popen([openssl_command, "enc", enc_flag, cipher, "-base64", "-pass", password], stdin=PIPE, stdout=PIPE, stderr=PIPE)
     openssl.stdin.write( data.encode("utf-8") )
     result, error = openssl.communicate()
-  except OSError,e:
+  except OSError as e:
     error_message = """
  Please verify that you have installed OpenSSL.
  Attempting to execute: %s
@@ -110,10 +110,10 @@ class CryptoCommand(sublime_plugin.TextCommand):
     # encrypt / decrypt selections
     for region in regions:
       data = self.view.substr(region)
-      results = crypto(self.view, enc_flag, password, data)  
+      results = crypto(self.view, enc_flag, password, data)
       if results:
         if enc:
-          results = results.encode( encoding )
+          results = str(results, encoding)
         else:
-          results = results.decode( encoding )
+          results = str(results, encoding)
         self.view.replace(edit, region, results)
