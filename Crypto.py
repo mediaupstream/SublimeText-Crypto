@@ -35,13 +35,24 @@ class AesCryptCommand(sublime_plugin.WindowCommand):
 
 
 #
+# ST3 needs a Text Command called to insert text
+#
+class CryptoMessageCommand(sublime_plugin.TextCommand):
+  def run(self, edit, message):
+    self.view.insert(edit, self.view.size(), message)
+
+
+#
 # Create a new output panel, insert the message and show it
 #
 def panel(window, message):
   p = window.get_output_panel('crypto_error')
-  p_edit = p.begin_edit()
-  p.insert(p_edit, p.size(), message)
-  p.end_edit(p_edit)
+  if ST3:
+    p.run_command("crypto_message", {"message": message})
+  else:
+    p_edit = p.begin_edit()
+    p.insert(p_edit, p.size(), message)
+    p.end_edit(p_edit)
   p.show(p.size())
   window.run_command("show_panel", {"panel": "output.crypto_error"})
 
@@ -73,6 +84,8 @@ def crypto(view, enc_flag, password, data):
   # probably a wrong password was entered
   if error:
     _err = error.splitlines()[0]
+    if ST3:
+      _err = str(_err)
     if _err.find('unknown option') != -1:
       panel(view.window(), 'Error: ' + _err)
     elif _err.find("WARNING:") != -1:
