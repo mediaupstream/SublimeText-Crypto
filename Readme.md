@@ -57,7 +57,7 @@ Todo
 
 Author & Contributors
 ----------------------
-[Derek Anderson](http://twitter.com/derekanderson)
+[Derek Anderson](http://twitter.com/derekanderson)  
 [Isaac Muse](https://github.com/facelessuser)
 
 
