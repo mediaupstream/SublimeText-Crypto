@@ -1,4 +1,4 @@
-Crypto Sublime Text 2 Package
+Crypto Sublime Text 2 and 3 Package
 =============================
 
 ### Encrypt and Decrypt a document or selection(s) using OpenSSL
