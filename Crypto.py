@@ -15,6 +15,8 @@ from the context menu and then enter a password
 import sublime, sublime_plugin, os
 from subprocess import Popen, PIPE, STDOUT
 
+ST3 = int(sublime.version()) >= 3000
+
 #
 # Capture user input (password) and send to the CryptoCommand
 #
@@ -33,13 +35,24 @@ class AesCryptCommand(sublime_plugin.WindowCommand):
 
 
 #
+# ST3 needs a Text Command called to insert text
+#
+class CryptoMessageCommand(sublime_plugin.TextCommand):
+  def run(self, edit, message):
+    self.view.insert(edit, self.view.size(), message)
+
+
+#
 # Create a new output panel, insert the message and show it
 #
 def panel(window, message):
   p = window.get_output_panel('crypto_error')
-  p_edit = p.begin_edit()
-  p.insert(p_edit, p.size(), message)
-  p.end_edit(p_edit)
+  if ST3:
+    p.run_command("crypto_message", {"message": message})
+  else:
+    p_edit = p.begin_edit()
+    p.insert(p_edit, p.size(), message)
+    p.end_edit(p_edit)
   p.show(p.size())
   window.run_command("show_panel", {"panel": "output.crypto_error"})
 
@@ -59,7 +72,7 @@ def crypto(view, enc_flag, password, data):
     openssl = Popen([openssl_command, "enc", enc_flag, cipher, "-base64", "-pass", password], stdin=PIPE, stdout=PIPE, stderr=PIPE)
     openssl.stdin.write( data.encode("utf-8") )
     result, error = openssl.communicate()
-  except OSError,e:
+  except OSError as e:
     error_message = """
  Please verify that you have installed OpenSSL.
  Attempting to execute: %s
@@ -71,6 +84,8 @@ def crypto(view, enc_flag, password, data):
   # probably a wrong password was entered
   if error:
     _err = error.splitlines()[0]
+    if ST3:
+      _err = str(_err)
     if _err.find('unknown option') != -1:
       panel(view.window(), 'Error: ' + _err)
     elif _err.find("WARNING:") != -1:
@@ -110,10 +125,16 @@ class CryptoCommand(sublime_plugin.TextCommand):
     # encrypt / decrypt selections
     for region in regions:
       data = self.view.substr(region)
-      results = crypto(self.view, enc_flag, password, data)  
+      results = crypto(self.view, enc_flag, password, data)
       if results:
         if enc:
-          results = results.encode( encoding )
+          if ST3:
+            results = str(results, encoding)
+          else:
+            results.encode( encoding )
         else:
-          results = results.decode( encoding )
+          if ST3:
+            results = str(results, encoding)
+          else:
+            results = results.decode( encoding )
         self.view.replace(edit, region, results)
