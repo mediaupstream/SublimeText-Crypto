@@ -8,7 +8,7 @@ This Package depends on `openssl`
 
 Screenshots
 --------
-![Preview](https://github.com/mediaupstream/SublimeText-Crypto/raw/master/screenshots/Crypto_screenshot.png "Before Encryption") ![Preview](https://github.com/mediaupstream/SublimeText-Crypto/raw/master/screenshots/Crypto_encrypted_screenshot.png "After Encryption")  
+![Preview](https://github.com/mediaupstream/SublimeText-Crypto/raw/master/screenshots/Crypto2.gif)
 
 
 Install
