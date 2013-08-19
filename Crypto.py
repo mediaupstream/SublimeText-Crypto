@@ -15,8 +15,9 @@ from the context menu and then enter a password
 import sublime, sublime_plugin, os
 from subprocess import Popen, PIPE, STDOUT
 
-from signal import signal, SIGPIPE, SIG_DFL
-signal(SIGPIPE,SIG_DFL)
+# -- try this to fix "Broken pipe", maybe
+# from signal import signal, SIGPIPE, SIG_DFL
+# signal(SIGPIPE,SIG_DFL)
 
 ST3 = int(sublime.version()) >= 3000
 
