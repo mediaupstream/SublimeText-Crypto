@@ -15,6 +15,9 @@ from the context menu and then enter a password
 import sublime, sublime_plugin, os
 from subprocess import Popen, PIPE, STDOUT
 
+from signal import signal, SIGPIPE, SIG_DFL
+signal(SIGPIPE,SIG_DFL)
+
 ST3 = int(sublime.version()) >= 3000
 
 #
@@ -72,6 +75,10 @@ def crypto(view, enc_flag, password, data):
     openssl = Popen([openssl_command, "enc", enc_flag, cipher, "-base64", "-pass", password], stdin=PIPE, stdout=PIPE, stderr=PIPE)
     openssl.stdin.write( data.encode("utf-8") )
     result, error = openssl.communicate()
+  except IOError as e:
+    error_message = "Error: %s" % e
+    panel(view.window(), error_message)
+    return False
   except OSError as e:
     error_message = """
  Please verify that you have installed OpenSSL.
