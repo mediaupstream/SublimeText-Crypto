@@ -12,7 +12,7 @@ from the context menu and then enter a password
 
 '''
 
-import sublime, sublime_plugin, os
+import sublime, sublime_plugin, os, random, string
 from subprocess import Popen, PIPE, STDOUT
 
 # -- try this to fix "Broken pipe", maybe
@@ -70,12 +70,17 @@ def crypto(view, enc_flag, password, data):
   s = sublime.load_settings("Crypto.sublime-settings")
   cipher = s.get('cipher')
   openssl_command = os.path.normpath( s.get('openssl_command') )
-  password = "pass:%s" % password
+
+  # pass the password as an ENV variable, for better security
+  envVar = ''.join( random.sample( string.uppercase, 23 ) )
+  os.environ[ envVar ] = password
+  _pass = "env:%s" % envVar
 
   try:
-    openssl = Popen([openssl_command, "enc", enc_flag, cipher, "-base64", "-pass", password], stdin=PIPE, stdout=PIPE, stderr=PIPE)
+    openssl = Popen([openssl_command, "enc", enc_flag, cipher, "-base64", "-pass", _pass], stdin=PIPE, stdout=PIPE, stderr=PIPE)
     openssl.stdin.write( data.encode("utf-8") )
     result, error = openssl.communicate()
+    os.unsetenv( envVar ) # get rid of the temporary ENV var
   except IOError as e:
     error_message = "Error: %s" % e
     panel(view.window(), error_message)
