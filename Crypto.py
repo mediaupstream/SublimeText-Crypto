@@ -72,7 +72,7 @@ def crypto(view, enc_flag, password, data):
   openssl_command = os.path.normpath( s.get('openssl_command') )
 
   # pass the password as an ENV variable, for better security
-  envVar = ''.join( random.sample( string.uppercase, 23 ) )
+  envVar = ''.join( random.sample( string.ascii_uppercase, 23 ) )
   os.environ[ envVar ] = password
   _pass = "env:%s" % envVar
 
