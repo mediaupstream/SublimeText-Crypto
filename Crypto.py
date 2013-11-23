@@ -80,7 +80,7 @@ def crypto(view, enc_flag, password, data):
     openssl = Popen([openssl_command, "enc", enc_flag, cipher, "-base64", "-pass", _pass], stdin=PIPE, stdout=PIPE, stderr=PIPE)
     openssl.stdin.write( data.encode("utf-8") )
     result, error = openssl.communicate()
-    os.unsetenv( envVar ) # get rid of the temporary ENV var
+    del os.environ[envVar] # get rid of the temporary ENV var
   except IOError as e:
     error_message = "Error: %s" % e
     panel(view.window(), error_message)
