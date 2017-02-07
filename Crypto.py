@@ -4,15 +4,16 @@
 @author   Derek Anderson
 @requires OpenSSL
 
-This Sublime Text 2 plugin adds AES encryption/decryption
+This Sublime Text plugin adds OpenSSL encryption/decryption
 features to the right click context menu.
 
-Usage: Make a selection (or not), Choose AES Encrypt or AES Decrypt 
+Usage: Make a selection (or not), Choose Crypto::Encrypt or Crypto::Decrypt 
 from the context menu and then enter a password
 
 '''
 
 import sublime, sublime_plugin, os, random, string
+from time import sleep
 from subprocess import Popen, PIPE, STDOUT
 
 # -- try this to fix "Broken pipe", maybe
@@ -25,17 +26,44 @@ ST3 = int(sublime.version()) >= 3000
 # Capture user input (password) and send to the CryptoCommand
 #
 class AesCryptCommand(sublime_plugin.WindowCommand):
+  readingInput=False
+  pwd=""
+  message="Enter Password:"
   def run(self, enc):
+    self.pwd = ""
+    self.readingInput=False
     self.enc = enc
-    message = "Create a Password:" if enc else "Enter Password:"
-    self.window.show_input_panel(message, "", self.on_done, None, None)
+    self.show_input("")
     pass
   def on_done(self, password):
     try:
       if self.window.active_view():
-        self.window.active_view().run_command("crypto", {"enc": self.enc, "password": password})
+        self.window.active_view().run_command(
+          "crypto", 
+          {"enc": self.enc, "password": self.pwd})
     except ValueError:
-        pass
+      pass
+  def show_input(self, initial):
+    self.window.show_input_panel(
+      self.message, 
+      initial, 
+      self.on_done, 
+      self.on_update, 
+      self.on_cancel)
+  def cancel_input(self):
+    self.window.run_command("hide_panel", {"cancel": True})
+  def on_update(self, password):
+    if (len(self.pwd) == len(password)):
+      return
+    self.pwd += password[-1]
+    self.readingInput=True
+    self.window.run_command("hide_panel", {"cancel": True})
+  def on_cancel(self):
+    if self.readingInput:
+      self.readingInput=False
+      self.show_input("*" * len(self.pwd))
+    
+
 
 
 #

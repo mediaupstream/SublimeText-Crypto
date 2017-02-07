@@ -44,6 +44,7 @@ The commands work on a selection, multiple selections or if nothing is selected 
 Todo
 ----
 * ~~Test on Linux and Windows~~
+* ~~Obscure Password with Asterisks~~
 * Add other functionality:
   - encryption on save
   - encrypt/decrypt multiple files, or all open files
