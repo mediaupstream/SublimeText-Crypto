@@ -35,6 +35,13 @@ class AesCryptCommand(sublime_plugin.WindowCommand):
     self.enc = enc
     self.show_input("")
     pass
+  def show_input(self, initial):
+    self.window.show_input_panel(
+      self.message, 
+      initial, 
+      self.on_done, 
+      self.on_update, 
+      self.on_cancel)
   def on_done(self, password):
     try:
       if self.window.active_view():
@@ -43,15 +50,6 @@ class AesCryptCommand(sublime_plugin.WindowCommand):
           {"enc": self.enc, "password": self.pwd})
     except ValueError:
       pass
-  def show_input(self, initial):
-    self.window.show_input_panel(
-      self.message, 
-      initial, 
-      self.on_done, 
-      self.on_update, 
-      self.on_cancel)
-  def cancel_input(self):
-    self.window.run_command("hide_panel", {"cancel": True})
   def on_update(self, password):
     if (len(self.pwd) == len(password)):
       return
@@ -62,7 +60,6 @@ class AesCryptCommand(sublime_plugin.WindowCommand):
     if self.readingInput:
       self.readingInput=False
       self.show_input("*" * len(self.pwd))
-    
 
 
 
