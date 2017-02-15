@@ -45,11 +45,6 @@ Todo
 ----
 * ~~Test on Linux and Windows~~
 * ~~Obscure Password with Asterisks~~
-* Add other functionality:
-  - encryption on save
-  - encrypt/decrypt multiple files, or all open files
-  - encrypt/decrypt using a keyfile
-  - etc...
 
 
 Author & Contributors
@@ -57,6 +52,7 @@ Author & Contributors
 [Derek Anderson](http://twitter.com/derekanderson)  
 [Isaac Muse](https://github.com/facelessuser)  
 [Elliot Marsden](https://github.com/eddiejessup)  
+[@circulosmeos](https://github.com/circulosmeos)
 
 
 License
