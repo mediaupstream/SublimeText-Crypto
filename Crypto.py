@@ -48,12 +48,16 @@ class AesCryptCommand(sublime_plugin.WindowCommand):
         self.window.active_view().run_command(
           "crypto", 
           {"enc": self.enc, "password": self.pwd})
+        self.pwd=""
     except ValueError:
       pass
   def on_update(self, password):
     if (len(self.pwd) == len(password)):
       return
-    self.pwd += password[-1]
+    if (len(self.pwd) < len(password)):
+      self.pwd += password[-1]
+    else:
+      self.pwd = self.pwd[:-1]
     self.readingInput=True
     self.window.run_command("hide_panel", {"cancel": True})
   def on_cancel(self):
