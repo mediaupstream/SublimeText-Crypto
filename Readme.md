@@ -36,7 +36,13 @@ After installation you will have:
 * Package Settings: `Preferences > Package Settings > Crypto`  
   - Set the path to your `openssl` executable - default: `openssl`
   - Set the Encryption Cipher - default: `-aes128`
+  - Obfuscate the password input - default 'false'
 
+**Note**:
+
+By default password input will *not* be obfuscated. If you want your password input to be obfuscated you can change the setting `obfuscate_password` to `true` in your `Preferences > Package Settings > Crypto > Settings - User`.
+
+If you choose to enable `obfuscate_password` please be aware that there is a bug with the implementation that doesn't allow you to copy/paste your password.
 
 The commands work on a selection, multiple selections or if nothing is selected the whole document. Once you trigger the command you will be prompted to enter a password.
 
@@ -45,6 +51,7 @@ Todo
 ----
 * ~~Test on Linux and Windows~~
 * ~~Obscure Password with Asterisks~~
+* Encrypt on save / Decrypt on open
 
 
 Author & Contributors

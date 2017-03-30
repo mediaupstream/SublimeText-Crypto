@@ -29,26 +29,37 @@ class AesCryptCommand(sublime_plugin.WindowCommand):
   readingInput=False
   pwd=""
   message="Enter Password:"
+  obfuscate=False
   def run(self, enc):
+    s = sublime.load_settings("Crypto.sublime-settings")
+    self.obfuscate = s.get("obfuscate_password", False)
     self.pwd = ""
     self.readingInput=False
     self.enc = enc
     self.show_input("")
     pass
   def show_input(self, initial):
-    self.window.show_input_panel(
-      self.message, 
-      initial, 
-      self.on_done, 
-      self.on_update, 
-      self.on_cancel)
+    if self.obfuscate:
+      self.window.show_input_panel(
+        self.message, 
+        initial, 
+        self.on_done, 
+        self.on_update, 
+        self.on_cancel)
+    else:
+      self.window.show_input_panel(
+        self.message, 
+        initial, 
+        self.on_done, None, None)
   def on_done(self, password):
     try:
       if self.window.active_view():
+        finalPass = self.pwd if self.obfuscate else password
         self.window.active_view().run_command(
           "crypto", 
-          {"enc": self.enc, "password": self.pwd})
+          {"enc": self.enc, "password": finalPass})
         self.pwd=""
+        finalPass=""
     except ValueError:
       pass
   def on_update(self, password):
