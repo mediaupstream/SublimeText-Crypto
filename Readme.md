@@ -9,18 +9,31 @@ This Package depends on `openssl`
 
 Install
 -------
-Installation via the [Package Control](http://wbond.net/sublime_packages/package_control) (Search for `Crypto`)
+**Recommended:** Installation via the [Package Control](http://wbond.net/sublime_packages/package_control) (Search for `Crypto`)
   
-To install manually clone this project into your `Sublime Text 2\Packages` folder:
+To install manually clone this project into your `Sublime Text 2|3\Packages` folder:
 
-*OSX*
+### OSX
+**SublimeText 2**:   
+```bash
+git clone git://github.com/mediaupstream/SublimeText-Crypto.git ~/Library/Application\ Support/Sublime\ Text\ 2/Packages/Crypto
+```
 
-    git clone git://github.com/mediaupstream/SublimeText-Crypto.git ~/Library/Application\ Support/Sublime\ Text\ 2/Packages/Crypto
+**SublimeText 3**:    
+```bash
+git clone git://github.com/mediaupstream/SublimeText-Crypto.git ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/Crypto
+```
 
-*Windows*
+### Windows
 
-    git clone git://github.com/mediaupstream/SublimeText-Crypto.git "%APPDATA%\Sublime Text 2\Packages\Crypto"
-
+**SublimeText 2**:   
+```bash
+git clone git://github.com/mediaupstream/SublimeText-Crypto.git "%APPDATA%\Sublime Text 2\Packages\Crypto"
+```
+**SublimeText 3**:   
+```bash
+git clone git://github.com/mediaupstream/SublimeText-Crypto.git "%APPDATA%\Sublime Text 3\Packages\Crypto"
+```
 
 
 Usage
