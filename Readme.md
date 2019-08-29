@@ -60,13 +60,6 @@ If you choose to enable `obfuscate_password` please be aware that there is a bug
 The commands work on a selection, multiple selections or if nothing is selected the whole document. Once you trigger the command you will be prompted to enter a password.
 
 
-Todo
-----
-* ~~Test on Linux and Windows~~
-* ~~Obscure Password with Asterisks~~
-* Encrypt on save / Decrypt on open
-
-
 Author & Contributors
 ----------------------
 [Derek Anderson](http://twitter.com/derekanderson)  
