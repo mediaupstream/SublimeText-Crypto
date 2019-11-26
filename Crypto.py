@@ -140,7 +140,7 @@ def crypto(view, enc_flag, password, data):
       _err = str(_err)
     if _err.find('unknown option') != -1:
       panel(view.window(), 'Error: ' + _err)
-    elif _err.find("WARNING:") != -1:
+    elif _err.find("WARNING") != -1:
       # skip WARNING's
       return result
     else:
